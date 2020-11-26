@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu, Spin } from 'antd';
+import { Avatar, Menu, Spin } from 'choerodon-ui';
+import { Size } from 'choerodon-ui/lib/_util/enum';
 import { history, useModel } from 'umi';
 import { outLogin } from '@/services/login';
 import { stringify } from 'querystring';
@@ -53,7 +54,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const loading = (
     <span className={`${styles.action} ${styles.account}`}>
       <Spin
-        size="small"
+        size={"small" as Size}
         style={{
           marginLeft: 8,
           marginRight: 8,
@@ -97,7 +98,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
+        <Avatar size={"small" as Size} className={styles.avatar} src={currentUser.avatar} alt="avatar" />
         <span className={`${styles.name} anticon`}>{currentUser.name}</span>
       </span>
     </HeaderDropdown>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Tag, message } from 'antd';
+import { Tag, message } from 'choerodon-ui';
 import { groupBy } from 'lodash';
 import moment from 'moment';
 import { useModel } from 'umi';

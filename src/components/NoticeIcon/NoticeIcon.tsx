@@ -1,8 +1,10 @@
 import { BellOutlined } from '@ant-design/icons';
-import { Badge, Spin, Tabs } from 'antd';
+import { Badge, Spin, Tabs } from 'choerodon-ui';
 import useMergeValue from 'use-merge-value';
 import React from 'react';
 import classNames from 'classnames';
+import { Placements  } from 'choerodon-ui/pro/lib/dropdown/enum'
+import { Action } from 'choerodon-ui/pro/lib/trigger/enum';
 import NoticeList, { NoticeIconTabProps } from './NoticeList';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
@@ -104,12 +106,16 @@ const NoticeIcon: React.FC<NoticeIconProps> & {
 
   return (
     <HeaderDropdown
-      placement="bottomRight"
+      placement={"bottomCenter" as Placements }
       overlay={notificationBox}
-      overlayClassName={styles.popover}
-      trigger={['click']}
+      popupClassName={styles.popover}
+      trigger={['click' as Action]}
       visible={visible}
-      onVisibleChange={setVisible}
+      onVisibleChange={(value) => {
+        if(value !== undefined) {
+          setVisible(value)
+        }
+      }}
     >
       {trigger}
     </HeaderDropdown>

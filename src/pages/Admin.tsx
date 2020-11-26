@@ -1,6 +1,5 @@
 import React from 'react';
-import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
-import { Card, Typography, Alert } from 'antd';
+import { Card, Alert , Row, Icon } from 'choerodon-ui';
 import { PageContainer } from '@ant-design/pro-layout';
 
 export default (): React.ReactNode => (
@@ -16,9 +15,9 @@ export default (): React.ReactNode => (
           marginBottom: 48,
         }}
       />
-      <Typography.Title level={2} style={{ textAlign: 'center' }}>
-        <SmileTwoTone /> Ant Design Pro <HeartTwoTone twoToneColor="#eb2f96" /> You
-      </Typography.Title>
+      <Row style={{ textAlign: 'center' }}>
+      <Icon type="face-o"   style={{color: 'greenyellow'}} /> C7n Pro <Icon type="favorite_border-o"  style={{color: 'pink'}} />  You
+      </Row>
     </Card>
     <p style={{ textAlign: 'center', marginTop: 24 }}>
       Want to add more pages? Please refer to{' '}

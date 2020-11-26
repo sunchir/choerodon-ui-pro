@@ -1,5 +1,4 @@
-import { Avatar, List } from 'antd';
-
+import { Avatar, List } from 'choerodon-ui';
 import React from 'react';
 import classNames from 'classnames';
 import styles from './NoticeList.less';

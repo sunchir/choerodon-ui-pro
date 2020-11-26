@@ -1,4 +1,4 @@
-import { Button, Result } from 'antd';
+import { Button, Result } from 'choerodon-ui';
 import React from 'react';
 import { history } from 'umi';
 
