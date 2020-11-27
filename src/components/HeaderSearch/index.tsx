@@ -1,10 +1,8 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { AutoComplete, Input } from 'choerodon-ui';
-import useMergeValue from 'use-merge-value';
-import { AutoCompleteProps } from 'choerodon-ui/lib/auto-complete';
-import React, { useRef } from 'react';
-
-import classNames from 'classnames';
+import { AutoComplete, DataSet, Tooltip, Icon } from 'choerodon-ui/pro';
+import React, { useMemo, useState } from 'react';
+import { observer } from 'mobx-react';
+import { RenderProps } from 'choerodon-ui/pro/lib/field/FormField';
+import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
 import styles from './index.less';
 
 export interface HeaderSearchProps {
@@ -13,90 +11,73 @@ export interface HeaderSearchProps {
   onVisibleChange?: (b: boolean) => void;
   className?: string;
   placeholder?: string;
-  options: AutoCompleteProps['options'];
+  options: object[];
   defaultOpen?: boolean;
   open?: boolean;
   defaultValue?: string;
   value?: string;
 }
 
-const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
-  const {
-    className,
-    defaultValue,
-    onVisibleChange,
-    placeholder,
-    open,
-    defaultOpen,
-    ...restProps
-  } = props;
+const HeaderSearch: React.FC<HeaderSearchProps> = observer((props) => {
+  const { options } = props;
 
-  const inputRef = useRef<Input | null>(null);
-
-  const [value, setValue] = useMergeValue<string | undefined>(defaultValue, {
-    value: props.value,
-    onChange: props.onChange,
-  });
-
-  const [searchMode, setSearchMode] = useMergeValue(defaultOpen || false, {
-    value: props.open,
-    onChange: onVisibleChange,
-  });
-
-  const inputClass = classNames(styles.input, {
-    [styles.show]: searchMode,
-  });
-
-  return (
-    <div
-      className={classNames(className, styles.headerSearch)}
-      onClick={() => {
-        setSearchMode(true);
-        if (searchMode && inputRef.current) {
-          inputRef.current.focus();
-        }
-      }}
-      onTransitionEnd={({ propertyName }) => {
-        if (propertyName === 'width' && !searchMode) {
-          if (onVisibleChange) {
-            onVisibleChange(searchMode);
-          }
-        }
-      }}
-    >
-      <SearchOutlined
-        key="Icon"
-        style={{
-          cursor: 'pointer',
-        }}
-      />
-      <AutoComplete
-        key="AutoComplete"
-        className={inputClass}
-        value={value}
-        options={restProps.options}
-        onChange={setValue}
-      >
-        <Input
-          size="small"
-          ref={inputRef}
-          defaultValue={defaultValue}
-          aria-label={placeholder}
-          placeholder={placeholder}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              if (restProps.onSearch) {
-                restProps.onSearch(value);
-              }
-            }
-          }}
-          onBlur={() => {
-            setSearchMode(false);
-          }}
-        />
-      </AutoComplete>
+  const renderer = ({ icon, meaning, src }: { icon: string; meaning: string; src: string }) => (
+    <div style={{ width: '100%' }}>
+      {meaning && <Icon type={icon} />} <a href={src}>{meaning}</a>
     </div>
   );
-};
+
+  const optionRenderer = ({ record }: RenderProps) => {
+    if (record) {
+      const data: { icon: string; meaning: string; src: string } = record.toData();
+      return (
+        <Tooltip title={data.meaning} placement="left">
+          {renderer(data)}
+        </Tooltip>
+      );
+    }
+    return null;
+  };
+
+  const [HeaderSearchDS] = useState(() => {
+    return new DataSet({
+      fields: [{ name: 'seachValue', type: 'string' as FieldType, label: '查询值' }],
+    });
+  });
+
+  const optionDS = useMemo(() => {
+    return new DataSet({
+      fields: [
+        {
+          name: 'value',
+          type: 'string' as FieldType,
+        },
+        {
+          name: 'meaning',
+          type: 'string' as FieldType,
+        },
+        {
+          name: 'icon',
+          type: 'string' as FieldType,
+        },
+        {
+          name: 'src',
+          type: 'string' as FieldType,
+        },
+      ],
+      data: options,
+    });
+  }, []);
+
+  return (
+    <AutoComplete
+      className={styles.headerSearch}
+      options={optionDS}
+      name="user"
+      dataSet={HeaderSearchDS}
+      optionRenderer={optionRenderer}
+    />
+  );
+});
 
 export default HeaderSearch;

@@ -54,27 +54,22 @@
   ],
   "dependencies": {
     "@ant-design/icons": "^4.0.0",
-    "@ant-design/pro-descriptions": "^1.0.19",
-    "@ant-design/pro-form": "^1.2.0",
     "@ant-design/pro-layout": "^6.4.19",
-    "@ant-design/pro-table": "^2.9.5",
     "@umijs/route-utils": "^1.0.33",
-    "antd": "^4.7.0",
+    "axios": "^0.21.0",
     "choerodon-ui": "^0.8.76",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
+    "mobx": ">=4.7.0 <4.8.0",
+    "mobx-react": ">6.1.1 <6.1.5",
     "moment": "^2.25.3",
-    "mobx": "4.7.0",
-    "mobx-react": "~6.1.1",
-    "axios": "^0.21.0",
     "omit.js": "^2.0.2",
     "qs": "^6.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet-async": "^1.0.4",
     "umi": "^3.2.14",
-    "umi-request": "^1.0.8",
-    "use-merge-value": "^1.0.1"
+    "umi-request": "^1.0.8"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^2.0.2",
@@ -103,15 +98,12 @@
     "gh-pages": "^3.0.0",
     "jsdom-global": "^3.0.2",
     "lint-staged": "^10.0.0",
-    "mockjs": "^1.0.1-beta3",
+    "mockjs": "^1.1.0",
     "prettier": "^2.0.1",
     "pro-download": "1.0.1",
     "puppeteer-core": "^5.0.0",
     "stylelint": "^13.0.0",
     "typescript": "^4.0.3"
-  },
-  "resolutions": {
-    "mobx-react": "6.1.5"
   },
   "engines": {
     "node": ">=10.0.0"

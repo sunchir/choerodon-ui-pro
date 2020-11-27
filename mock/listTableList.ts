@@ -1,171 +1,305 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+import Mock from 'mockjs';
 import { Request, Response } from 'express';
-import { parse } from 'url';
-import { TableListItem, TableListParams } from '@/pages/ListTableList/data';
 
-// mock tableListDataSource
-const genList = (current: number, pageSize: number) => {
-  const tableListDataSource: TableListItem[] = [];
+const getFakeList = (req: Request, res: Response) => {
+  const result: any[] = [];
 
-  for (let i = 0; i < pageSize; i += 1) {
-    const index = (current - 1) * 10 + i;
-    tableListDataSource.push({
-      key: index,
-      disabled: i % 6 === 0,
-      href: 'https://ant.design',
-      avatar: [
-        'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-        'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-      ][i % 2],
-      name: `TradeCode ${index}`,
-      owner: '曲丽丽',
-      desc: '这是一段描述',
-      callNo: Math.floor(Math.random() * 1000),
-      status: Math.floor(Math.random() * 10) % 4,
-      updatedAt: new Date(),
-      createdAt: new Date(),
-      progress: Math.ceil(Math.random() * 100),
+  const params = req.query as any;
+  const {
+    size = 10,
+    page,
+    status,
+    serialNumber = '',
+    title = '',
+    startTime,
+    endTime,
+    serialType,
+  } = params;
+  if (serialType === 'to-do') {
+    return res.json({
+      rows: [],
+      success: true,
+      total: 0,
     });
   }
-  tableListDataSource.reverse();
-  return tableListDataSource;
+
+  for (let i = 0; i < size; i++) {
+    const len: number = result.length;
+    result.push({
+      serialNumber: `1000${serialNumber}${len}-${page * size}`,
+      title: `标题${title}${len}`,
+      description: '描述文字描述文字描述文字描述文字描述文字描述文字',
+      status: status !== undefined ? Number(status) : Math.round(Math.random()),
+      operator: '张三',
+      remark: '备注',
+      createTime: endTime || startTime || '2020-11-09 08:33:11',
+    });
+  }
+
+  return res.json({
+    rows: result,
+    success: true,
+    total: size * 10,
+  });
 };
 
-let tableListDataSource = genList(1, 100);
+const deleteFakeData = (req: Request, res: Response) => {
+  res.send(req.body);
+};
 
-function getRule(req: Request, res: Response, u: string) {
-  let realUrl = u;
-  if (!realUrl || Object.prototype.toString.call(realUrl) !== '[object String]') {
-    realUrl = req.url;
-  }
-  const { current = 1, pageSize = 10 } = req.query;
-  const params = (parse(realUrl, true).query as unknown) as TableListParams;
-
-  let dataSource = [...tableListDataSource].slice(
-    ((current as number) - 1) * (pageSize as number),
-    (current as number) * (pageSize as number),
+const submitData = (req: Request, res: Response) => {
+  // 需要处理新建的情况
+  res.send(
+    req.body.map((v: any) => ({
+      serialNumber: `${Math.floor(Math.random() * 100000)}`,
+      operator: '张三',
+      createTime: '2020-11-09 08:33:11',
+      ...v,
+    })),
   );
-  const sorter = JSON.parse(params.sorter as any);
-  if (sorter) {
-    dataSource = dataSource.sort((prev, next) => {
-      let sortNumber = 0;
-      Object.keys(sorter).forEach((key) => {
-        if (sorter[key] === 'descend') {
-          if (prev[key] - next[key] > 0) {
-            sortNumber += -1;
-          } else {
-            sortNumber += 1;
-          }
-          return;
-        }
-        if (prev[key] - next[key] > 0) {
-          sortNumber += 1;
-        } else {
-          sortNumber += -1;
-        }
-      });
-      return sortNumber;
+};
+
+const getOperationRecord = (req: Request, res: Response) => {
+  const result: any[] = [];
+  const params = req.query as any;
+  const { size = 10, page, serialNumber, operatorType } = params;
+  for (let i = 0; i < size; i++) {
+    const len: number = result.length;
+    result.push({
+      operator: `张三${len}-${page * size}-${serialNumber}`,
+      operatorType:
+        operatorType !== undefined ? operatorType : `${Math.random() > 0.5 ? 'add' : 'edit'}`,
+      operatorTime: '2020-11-09 08:33:11',
     });
   }
-  if (params.filter) {
-    const filter = JSON.parse(params.filter as any) as {
-      [key: string]: string[];
-    };
-    if (Object.keys(filter).length > 0) {
-      dataSource = dataSource.filter((item) => {
-        return Object.keys(filter).some((key) => {
-          if (!filter[key]) {
-            return true;
-          }
-          if (filter[key].includes(`${item[key]}`)) {
-            return true;
-          }
-          return false;
-        });
-      });
-    }
-  }
 
-  if (params.name) {
-    dataSource = dataSource.filter((data) => data.name.includes(params.name || ''));
-  }
-  const result = {
-    data: dataSource,
-    total: tableListDataSource.length,
+  return res.json({
+    rows: result,
     success: true,
-    pageSize,
-    current: parseInt(`${params.currentPage}`, 10) || 1,
-  };
+    total: size * 10,
+  });
+};
 
-  return res.json(result);
-}
-
-function postRule(req: Request, res: Response, u: string, b: Request) {
-  let realUrl = u;
-  if (!realUrl || Object.prototype.toString.call(realUrl) !== '[object String]') {
-    realUrl = req.url;
-  }
-
-  const body = (b && b.body) || req.body;
-  const { method, name, desc, key } = body;
-
-  switch (method) {
-    /* eslint no-case-declarations:0 */
-    case 'delete':
-      tableListDataSource = tableListDataSource.filter((item) => key.indexOf(item.key) === -1);
-      break;
-    case 'post':
-      (() => {
-        const i = Math.ceil(Math.random() * 10000);
-        const newRule = {
-          key: tableListDataSource.length,
-          href: 'https://ant.design',
-          avatar: [
-            'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-            'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-          ][i % 2],
-          name,
-          owner: '曲丽丽',
-          desc,
-          callNo: Math.floor(Math.random() * 1000),
-          status: Math.floor(Math.random() * 10) % 2,
-          updatedAt: new Date(),
-          createdAt: new Date(),
-          progress: Math.ceil(Math.random() * 100),
-        };
-        tableListDataSource.unshift(newRule);
-        return res.json(newRule);
-      })();
-      return;
-
-    case 'update':
-      (() => {
-        let newRule = {};
-        tableListDataSource = tableListDataSource.map((item) => {
-          if (item.key === key) {
-            newRule = { ...item, desc, name };
-            return { ...item, desc, name };
-          }
-          return item;
-        });
-        return res.json(newRule);
-      })();
-      return;
-    default:
-      break;
-  }
-
-  const result = {
-    list: tableListDataSource,
-    pagination: {
-      total: tableListDataSource.length,
+const statusData = {
+  rows: [
+    {
+      objectVersionNumber: 1,
+      codeId: 10001,
+      codeValueId: 10027,
+      description: null,
+      meaning: '禁用',
+      value: 0,
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+      parentCodeValueId: null,
+      parentCodeValue: null,
+      parentCodeValueMeaning: null,
     },
-  };
+    {
+      objectVersionNumber: 1,
+      codeId: 10001,
+      codeValueId: 10028,
+      description: null,
+      meaning: '启用',
+      value: 1,
+      orderSeq: 20,
+      tag: null,
+      enabledFlag: 'Y',
+      parentCodeValueId: null,
+      parentCodeValue: null,
+      parentCodeValueMeaning: null,
+    },
+  ],
+};
 
-  res.json(result);
-}
+const operatorTypeData = {
+  rows: [
+    {
+      objectVersionNumber: 1,
+      codeId: 10001,
+      codeValueId: 10027,
+      description: null,
+      meaning: '新建',
+      value: 'add',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+      parentCodeValueId: null,
+      parentCodeValue: null,
+      parentCodeValueMeaning: null,
+    },
+    {
+      objectVersionNumber: 1,
+      codeId: 10001,
+      codeValueId: 10028,
+      description: null,
+      meaning: '编辑',
+      value: 'edit',
+      orderSeq: 20,
+      tag: null,
+      enabledFlag: 'Y',
+      parentCodeValueId: null,
+      parentCodeValue: null,
+      parentCodeValueMeaning: null,
+    },
+    {
+      objectVersionNumber: 1,
+      codeId: 10001,
+      codeValueId: 10028,
+      description: null,
+      meaning: '删除',
+      value: 'delete',
+      orderSeq: 20,
+      tag: null,
+      enabledFlag: 'Y',
+      parentCodeValueId: null,
+      parentCodeValue: null,
+      parentCodeValueMeaning: null,
+    },
+  ],
+};
+
+const dataSetLovTemple = {
+  'rows|10': [
+    {
+      _token: '@guid()',
+      'objectVersionNumber|1-10': 1,
+      code: "@pick(['HR', 'SYS']).@upper(@word)",
+      'codeId|+1': 10001,
+      codeValues: '@ctitle()',
+      description: '@ctitle()',
+      type: '@name',
+      enabledFlag: /[NY]/,
+      parentCodeId: [/1[0-9]{10}/, /1[0-9]{10}/],
+      parentCodeDescription: '@sentence(3, 6)',
+    },
+  ],
+  success: true,
+  total: 35,
+};
+
+const lovDefineTemple = {
+  _token: '@guid()',
+  objectVersionNumber: 1,
+  code: 'LOV_CODE',
+  description: '快码',
+  height: 300,
+  lovId: 10015,
+  lovItems: [
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10033,
+      lovId: 10015,
+      display: '代码',
+      gridFieldName: 'code',
+      gridFieldWidth: 150,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldWidth: null,
+      conditionFieldLabelWidth: null,
+      conditionFieldType: null,
+      conditionFieldName: null,
+      conditionFieldTextfield: null,
+      conditionFieldNewline: 'N',
+      conditionFieldSelectUrl: null,
+      conditionFieldSelectVf: null,
+      conditionFieldSelectTf: null,
+      conditionFieldSelectCode: null,
+      conditionFieldLovCode: null,
+      conditionFieldSequence: 1,
+      gridFieldSequence: 1,
+    },
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10034,
+      lovId: 10015,
+      display: '描述',
+      gridFieldName: 'description',
+      gridFieldWidth: 250,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldWidth: null,
+      conditionFieldLabelWidth: null,
+      conditionFieldType: null,
+      conditionFieldName: null,
+      conditionFieldTextfield: null,
+      conditionFieldNewline: 'N',
+      conditionFieldSelectUrl: null,
+      conditionFieldSelectVf: null,
+      conditionFieldSelectTf: null,
+      conditionFieldSelectCode: null,
+      conditionFieldLovCode: null,
+      conditionFieldSequence: 2,
+      gridFieldSequence: 2,
+    },
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10034,
+      lovId: 10015,
+      display: '描述2',
+      gridFieldName: 'description2',
+      gridFieldWidth: 250,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldWidth: null,
+      conditionFieldLabelWidth: null,
+      conditionFieldType: null,
+      conditionFieldName: null,
+      conditionFieldTextfield: null,
+      conditionFieldNewline: 'N',
+      conditionFieldSelectUrl: null,
+      conditionFieldSelectVf: null,
+      conditionFieldSelectTf: null,
+      conditionFieldSelectCode: null,
+      conditionFieldLovCode: null,
+      conditionFieldSequence: 2,
+      gridFieldSequence: 2,
+    },
+  ],
+  placeholder: '请选择快码',
+  sqlId: 'CodeMapper.select',
+  customSql: null,
+  queryColumns: 2,
+  customUrl: null,
+  textField: 'description',
+  title: '父级快码',
+  valueField: 'code',
+  width: 710,
+  delayLoad: 'N',
+  needQueryParam: 'N',
+  editableFlag: 'Y',
+  canPopup: 'Y',
+  lovPageSize: '10',
+  treeFlag: 'N',
+  idField: null,
+  parentIdField: null,
+};
+
+const lovTempleData = Mock.mock(dataSetLovTemple);
+
+const lovDefineData = Mock.mock(lovDefineTemple);
 
 export default {
-  'GET /api/rule': getRule,
-  'POST /api/rule': postRule,
+  'GET /_api/standard-table/query': getFakeList,
+  'DELETE /_api/standard-table/delete': deleteFakeData,
+  'POST /_api/standard-table/submit': submitData,
+  'GET /_api/standard-table/operation-record/query': getOperationRecord,
+  'DELETE /_api/standard-table/operation-record/delete': deleteFakeData,
+  'GET /_api/standard-table/code/status': statusData,
+  'GET /_api/standard-table/code/operatorType': operatorTypeData,
+  'POST /_api/form/dataset/common/lov/dataset/LOV_CODE': lovTempleData,
+  'POST /_api/sys/lov/lov_define': lovDefineData,
 };
