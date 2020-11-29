@@ -1,8 +1,8 @@
 {
-  "name": "ant-design-pro",
-  "version": "5.0.0-beta.0",
+  "name": "c7n-pro",
+  "version": "0.0.1-beta.0",
   "private": true,
-  "description": "An out-of-box UI solution for enterprise applications",
+  "description": "An out-of-box choerodon-ui solution for enterprise applications",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
