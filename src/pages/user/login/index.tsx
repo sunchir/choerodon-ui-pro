@@ -1,6 +1,6 @@
 import { message, Tabs } from 'choerodon-ui';
 import { Form, TextField, Password, DataSet, Button } from 'choerodon-ui/pro';
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Link, history, FormattedMessage, SelectLang } from 'umi';
 import Footer from '@/components/Footer';
 import { getFakeCaptcha, LoginParamsType } from '@/services/login';
@@ -8,11 +8,26 @@ import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
 import { ButtonType, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import Container from '@hzero-front-ui/cfg/lib/components/Container';
-// import ThemeContext from '@hzero-front-ui/cfg/lib/utils/ThemeContext';
+import ThemeContext from '@hzero-front-ui/cfg/lib/utils/ThemeContext';
+import useThemeHelper from '@hzero-front-ui/cfg/lib/components/Container/useThemeHelper';
+import { defaultConfig } from '@hzero-front-ui/cfg/lib/utils/config';
+import { ThemeSchema } from '@hzero-front-ui/cfg/lib/utils';
 
 import styles from './index.less';
 
 const { TabPane } = Tabs;
+
+export const schemaMap = ['theme1', 'theme2', 'theme3', 'theme4'];
+
+function readOriginLocalTheme() {
+  const configStr = localStorage.getItem('themeConfig');
+  if (configStr && configStr !== 'undefined') {
+    // 之所以要判断是不是undefined，是因为往本地存储的时候如果传的值不能被格式化，就会变成undefined字符串
+    const configObj = JSON.parse(configStr);
+    return configObj || {};
+  }
+  return {};
+}
 
 /**
  * 此方法会跳转到 redirect 参数所在的位置
@@ -24,6 +39,21 @@ const goto = () => {
 };
 
 const Login: React.FC<{}> = () => {
+  const { setTheme } = useContext(ThemeContext);
+  const { setLocalTheme } = useThemeHelper();
+  const localTheme = readOriginLocalTheme();
+  const schemaCurrent = (localTheme[schemaMap[3]] || {}).current;
+  const conf = {
+    current: {
+      ...(schemaCurrent || defaultConfig),
+      schema: schemaMap[3],
+    },
+    active: schemaMap[3] as ThemeSchema,
+    prev: {},
+  };
+  setLocalTheme(conf);
+  // @ts-ignore
+  setTheme(conf);
   const haneleSuccess = async (values: LoginParamsType) => {
     try {
       if (values.success === true) {
@@ -108,7 +138,7 @@ const Login: React.FC<{}> = () => {
   );
 
   return (
-    <Container defaultTheme="theme4">
+    <Container defaultTheme="theme1">
       <div className={styles.container}>
         <div className={styles.lang}>{SelectLang && <SelectLang />}</div>
         <div className={styles.content}>
