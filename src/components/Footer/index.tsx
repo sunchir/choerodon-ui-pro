@@ -4,7 +4,8 @@ import { DefaultFooter } from '@ant-design/pro-layout';
 
 export default () => (
   <DefaultFooter
-    copyright="2020 汉得前端基础研发出品"
+    copyright="The choerodon Author®. All rights reserved."
+    style={{ background: 'white' }}
     links={[
       {
         key: 'c7n Pro',

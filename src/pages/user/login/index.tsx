@@ -1,4 +1,4 @@
-import { message, Tabs } from 'choerodon-ui';
+import { message, Tabs, Row, Col } from 'choerodon-ui';
 import { Form, TextField, Password, DataSet, Button } from 'choerodon-ui/pro';
 import React, { useContext, useMemo } from 'react';
 import { Link, history, FormattedMessage, SelectLang } from 'umi';
@@ -140,68 +140,75 @@ const Login: React.FC<{}> = () => {
   return (
     <Container defaultTheme="theme1">
       <div className={styles.container}>
-        <div className={styles.lang}>{SelectLang && <SelectLang />}</div>
-        <div className={styles.content}>
-          <div className={styles.top}>
-            <div className={styles.header}>
-              <Link to="/">
-                <img alt="logo" className={styles.logo} src="/logo.svg" />
-                <span className={styles.title}>c7n-pro</span>
-              </Link>
+        <Row className={styles.row}>
+          <Col className={styles.description} xs={2} sm={4} md={6} lg={12} xl={12}>
+            <img className={styles.descriptionLog} alt="logo" src="/ChoerodonUI_logo.svg" />
+            <h2 className={styles.descriptionText}>Choerodon UI 用于开发和服务于企业级后台产品 </h2>
+            <img className={styles.descriptionImg} alt="description" src="/description.svg" />
+          </Col>
+          <Col className={styles.login} xs={2} sm={4} md={6} lg={12} xl={12}>
+            <div className={styles.lang}>{SelectLang && <SelectLang />}</div>
+            <div className={styles.content}>
+              <div className={styles.top}>
+                <div className={styles.header}>
+                  <Link to="/">
+                    <span className={styles.title}>登录</span>
+                  </Link>
+                </div>
+              </div>
+              <div className={styles.main}>
+                <Tabs>
+                  <TabPane tab="用户名登陆" key="1">
+                    <Form
+                      onSuccess={haneleSuccess}
+                      dataSet={nameLoginDS}
+                      labelLayout={'float' as LabelLayout}
+                    >
+                      <TextField labelWidth={4} name="userName" clearButton />
+                      <Password name="userPassword" />
+                      <div>
+                        <Button type={'submit' as ButtonType}>登录</Button>
+                        <Button type={'reset' as ButtonType} style={{ marginLeft: 8 }}>
+                          重置
+                        </Button>
+                      </div>
+                    </Form>
+                  </TabPane>
+                  <TabPane tab="手机号码登录" key="2">
+                    <Form
+                      onSuccess={haneleSuccess}
+                      dataSet={captchaDS}
+                      labelLayout={'float' as LabelLayout}
+                    >
+                      <TextField
+                        labelWidth={150}
+                        pattern="1[3-9]\d{9}"
+                        name="phoneNumber"
+                        clearButton
+                        addonBefore="+86"
+                        addonAfter="中国大陆"
+                      />
+                      <TextField
+                        name="phoneCaptcha"
+                        pattern="1[3-9]\d{9}"
+                        maxLength={4}
+                        addonAfter={captchaButton}
+                      />
+                      <div>
+                        <Button type={'submit' as ButtonType}>登录</Button>
+                        <Button type={'reset' as ButtonType} style={{ marginLeft: 8 }}>
+                          重置
+                        </Button>
+                      </div>
+                    </Form>
+                  </TabPane>
+                </Tabs>
+                <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
+              </div>
             </div>
-            <div className={styles.desc}>c7n-pro 高效率开发设计框架</div>
-          </div>
-          <div className={styles.main}>
-            <Tabs>
-              <TabPane tab="用户名登陆" key="1">
-                <Form
-                  onSuccess={haneleSuccess}
-                  dataSet={nameLoginDS}
-                  labelLayout={'float' as LabelLayout}
-                >
-                  <TextField labelWidth={4} name="userName" clearButton />
-                  <Password name="userPassword" />
-                  <div>
-                    <Button type={'submit' as ButtonType}>登录</Button>
-                    <Button type={'reset' as ButtonType} style={{ marginLeft: 8 }}>
-                      重置
-                    </Button>
-                  </div>
-                </Form>
-              </TabPane>
-              <TabPane tab="手机号码登录" key="2">
-                <Form
-                  onSuccess={haneleSuccess}
-                  dataSet={captchaDS}
-                  labelLayout={'float' as LabelLayout}
-                >
-                  <TextField
-                    labelWidth={150}
-                    pattern="1[3-9]\d{9}"
-                    name="phoneNumber"
-                    clearButton
-                    addonBefore="+86"
-                    addonAfter="中国大陆"
-                  />
-                  <TextField
-                    name="phoneCaptcha"
-                    pattern="1[3-9]\d{9}"
-                    maxLength={4}
-                    addonAfter={captchaButton}
-                  />
-                  <div>
-                    <Button type={'submit' as ButtonType}>登录</Button>
-                    <Button type={'reset' as ButtonType} style={{ marginLeft: 8 }}>
-                      重置
-                    </Button>
-                  </div>
-                </Form>
-              </TabPane>
-            </Tabs>
-            <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
-          </div>
-        </div>
-        <Footer />
+            <Footer />
+          </Col>
+        </Row>
       </div>
     </Container>
   );
