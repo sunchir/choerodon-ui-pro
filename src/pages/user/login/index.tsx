@@ -1,17 +1,18 @@
 import { message, Tabs, Row, Col } from 'choerodon-ui';
-import { Form, TextField, Password, DataSet, Button } from 'choerodon-ui/pro';
-import React, { useContext, useMemo } from 'react';
+import { Form, TextField, Password, DataSet, Button, CheckBox } from 'choerodon-ui/pro';
+import React, { useMemo } from 'react';
 import { Link, history, FormattedMessage, SelectLang } from 'umi';
 import Footer from '@/components/Footer';
 import { getFakeCaptcha, LoginParamsType } from '@/services/login';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
-import { ButtonType, FuncType } from 'choerodon-ui/pro/lib/button/enum';
-import Container from '@hzero-front-ui/cfg/lib/components/Container';
-import ThemeContext from '@hzero-front-ui/cfg/lib/utils/ThemeContext';
+import { ButtonType, FuncType, ButtonColor } from 'choerodon-ui/pro/lib/button/interface';
 import useThemeHelper from '@hzero-front-ui/cfg/lib/components/Container/useThemeHelper';
 import { defaultConfig } from '@hzero-front-ui/cfg/lib/utils/config';
 import { ThemeSchema } from '@hzero-front-ui/cfg/lib/utils';
+import AliPayIcon from '@/assets/login/Alipay';
+import Wechat from '@/assets/login/wechat';
+import Taobao from '@/assets/login/Taobao';
 
 import styles from './index.less';
 
@@ -39,7 +40,6 @@ const goto = () => {
 };
 
 const Login: React.FC<{}> = () => {
-  const { setTheme } = useContext(ThemeContext);
   const { setLocalTheme } = useThemeHelper();
   const localTheme = readOriginLocalTheme();
   const schemaCurrent = (localTheme[schemaMap[3]] || {}).current;
@@ -52,8 +52,6 @@ const Login: React.FC<{}> = () => {
     prev: {},
   };
   setLocalTheme(conf);
-  // @ts-ignore
-  setTheme(conf);
   const haneleSuccess = async (values: LoginParamsType) => {
     try {
       if (values.success === true) {
@@ -138,7 +136,6 @@ const Login: React.FC<{}> = () => {
   );
 
   return (
-    <Container defaultTheme="theme1">
       <div className={styles.container}>
         <Row className={styles.row}>
           <Col className={styles.description} xs={2} sm={4} md={6} lg={12} xl={12}>
@@ -167,10 +164,8 @@ const Login: React.FC<{}> = () => {
                       <TextField labelWidth={4} name="userName" clearButton />
                       <Password name="userPassword" />
                       <div>
-                        <Button type={'submit' as ButtonType}>登录</Button>
-                        <Button type={'reset' as ButtonType} style={{ marginLeft: 8 }}>
-                          重置
-                        </Button>
+                        <CheckBox label="自动登陆" name="frozen" ></CheckBox> <span className={styles.forgetPassword}>忘记密码</span>
+                        <Button color={'primary' as ButtonColor} type={'submit' as ButtonType}>登录</Button>
                       </div>
                     </Form>
                   </TabPane>
@@ -178,6 +173,7 @@ const Login: React.FC<{}> = () => {
                     <Form
                       onSuccess={haneleSuccess}
                       dataSet={captchaDS}
+                      className={styles.phoneForm}
                       labelLayout={'float' as LabelLayout}
                     >
                       <TextField
@@ -195,22 +191,23 @@ const Login: React.FC<{}> = () => {
                         addonAfter={captchaButton}
                       />
                       <div>
-                        <Button type={'submit' as ButtonType}>登录</Button>
-                        <Button type={'reset' as ButtonType} style={{ marginLeft: 8 }}>
-                          重置
-                        </Button>
+                        
+                        <Button color={'primary' as ButtonColor} type={'submit' as ButtonType}>登录</Button>
                       </div>
                     </Form>
                   </TabPane>
                 </Tabs>
                 <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
+                <AliPayIcon className={styles.icon} />
+                <Taobao className={styles.icon} />
+                <Wechat className={styles.icon} />
+                <span className={styles.register}>注册账户</span>
               </div>
             </div>
             <Footer />
           </Col>
         </Row>
       </div>
-    </Container>
   );
 };
 

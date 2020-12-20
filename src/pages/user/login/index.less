@@ -16,6 +16,26 @@
   height: 100%;
 }
 
+.phoneForm {
+  tbody {
+    tr:first-child {
+      :global(.c7n-pro-input-group-before) { 
+        padding: 0 .1rem;
+      }
+      :global(.c7n-pro-input-group-after) {
+        padding: 0 .1rem;
+      }
+    }
+    tr:nth-of-type(2){
+      :global(.c7n-pro-input-group-after) {
+        button {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
 .description {
   height: 100%;
   background: #f4f9ff;
@@ -67,7 +87,7 @@
 
 @media (min-width: @screen-md-min) {
   .content {
-    padding: 1.48rem 0 0.24rem;
+    padding:1.48rem 0 calc(100vh - 6.82rem);
   }
 }
 
@@ -106,7 +126,13 @@
       margin: auto;
       font-size: 16rpx;
     }
+    .c7n-pro-btn-primary {
+      width: 100%;
+      border-radius: 6px;
+    }
   }
+
+
 
   .icon {
     margin-left: 16px;
@@ -119,6 +145,20 @@
     &:hover {
       color: @primary-color;
     }
+  }
+
+  .forgetPassword {
+    position: absolute;
+    right: .1rem;
+    cursor: pointer;
+    color: #5365EA;
+  }
+  
+  .register {
+    margin-left: .6rem;
+    color: #5365EA;
+    position: absolute;
+    cursor: pointer;
   }
 
   .other {

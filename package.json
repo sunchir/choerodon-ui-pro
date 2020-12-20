@@ -60,7 +60,7 @@
     "@hzero-front-ui/hzero-ui": "2.0.7-alpha-c7n.2",
     "@umijs/route-utils": "^1.0.33",
     "axios": "^0.21.0",
-    "choerodon-ui": "^0.8.76",
+    "choerodon-ui": "^0.8.77",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
     "mobx": ">=4.7.0 <4.8.0",

@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
+import Container from '@hzero-front-ui/cfg/lib/components/Container';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -108,6 +109,14 @@ const errorHandler = (error: ResponseError) => {
   }
   throw error;
 };
+
+export function rootContainer(container:any) {
+  return (
+    <Container defaultTheme="theme4">
+      {container}
+    </Container>
+  );
+}
 
 export const request: RequestConfig = {
   errorHandler,
