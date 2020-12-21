@@ -1,4 +1,4 @@
-import { Button, message, notification } from 'antd';
+import { Button, message, notification } from 'choerodon-ui';
 
 import React from 'react';
 import { useIntl } from 'umi';

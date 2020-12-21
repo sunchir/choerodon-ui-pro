@@ -1,7 +1,7 @@
 import { message, Tabs, Row, Col } from 'choerodon-ui';
 import { Form, TextField, Password, DataSet, Button, CheckBox } from 'choerodon-ui/pro';
 import React, { useMemo } from 'react';
-import { Link, history, FormattedMessage, SelectLang } from 'umi';
+import { Link, history, FormattedMessage, SelectLang, useIntl } from 'umi';
 import Footer from '@/components/Footer';
 import { getFakeCaptcha, LoginParamsType } from '@/services/login';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
@@ -51,16 +51,21 @@ const Login: React.FC<{}> = () => {
     active: schemaMap[3] as ThemeSchema,
     prev: {},
   };
+  const intl = useIntl();
   setLocalTheme(conf);
   const haneleSuccess = async (values: LoginParamsType) => {
     try {
       if (values.success === true) {
-        message.success('登录成功！');
+        message.success(
+          intl.formatMessage({ id: 'pages.login.success', defaultMessage: '登录成功' }),
+        );
         goto();
         return;
       }
     } catch (error) {
-      message.error('登录失败，请重试！');
+      message.error(
+        message.success(intl.formatMessage({ id: 'pages.login.fail', defaultMessage: '登录失败' })),
+      );
     }
   };
 
@@ -72,13 +77,13 @@ const Login: React.FC<{}> = () => {
         {
           name: 'userName', // 字段名
           type: 'string' as FieldType, // 字段类型, 决定以什么组件进行渲染
-          label: '用户名称', // 字段标签 可以在form或者table上生成对应的label
+          label: intl.formatMessage({ id: 'pages.login.userName', defaultMessage: '用户名' }), // 字段标签 可以在form或者table上生成对应的label
           required: true,
         },
         {
           name: 'userPassword',
           type: 'string' as FieldType,
-          label: '用户密码',
+          label: intl.formatMessage({ id: 'pages.login.userPassword', defaultMessage: '用户密码' }),
           required: true,
         },
         {
@@ -98,13 +103,13 @@ const Login: React.FC<{}> = () => {
         {
           name: 'phoneNumber', // 字段名
           type: 'string' as FieldType, // 字段类型, 决定以什么组件进行渲染
-          label: '手机号码', // 字段标签 可以在form或者table上生成对应的label
+          label: intl.formatMessage({ id: 'pages.login.phoneNumber', defaultMessage: '手机号码' }), // 字段标签 可以在form或者table上生成对应的label
           required: true,
         },
         {
           name: 'phoneCaptcha',
           type: 'number' as FieldType,
-          label: '验证码',
+          label: intl.formatMessage({ id: 'pages.login.phoneCaptcha', defaultMessage: '验证码' }),
           required: true,
         },
         {
@@ -125,89 +130,159 @@ const Login: React.FC<{}> = () => {
           if (result === false) {
             return;
           }
-          message.success('获取验证码成功！验证码为：1234');
+          message.success(
+            intl.formatMessage({
+              id: 'pages.login.captcha.success',
+              defaultMessage: '获取验证码成功！验证码为：1234',
+            }),
+          );
         } else {
-          message.error('请输入手机号码');
+          message.error(
+            intl.formatMessage({
+              id: 'pages.login.phoneNumber.placeholder',
+              defaultMessage: '请输入手机号！',
+            }),
+          );
         }
       }}
     >
-      获取验证码
+      {intl.formatMessage({
+        id: 'pages.login.phoneLogin.getVerificationCode',
+        defaultMessage: '获取验证码',
+      })}
     </Button>
   );
 
   return (
-      <div className={styles.container}>
-        <Row className={styles.row}>
-          <Col className={styles.description} xs={2} sm={4} md={6} lg={12} xl={12}>
-            <img className={styles.descriptionLog} alt="logo" src="/ChoerodonUI_logo.svg" />
-            <h2 className={styles.descriptionText}>Choerodon UI 用于开发和服务于企业级后台产品 </h2>
-            <img className={styles.descriptionImg} alt="description" src="/description.svg" />
-          </Col>
-          <Col className={styles.login} xs={2} sm={4} md={6} lg={12} xl={12}>
-            <div className={styles.lang}>{SelectLang && <SelectLang />}</div>
-            <div className={styles.content}>
-              <div className={styles.top}>
-                <div className={styles.header}>
-                  <Link to="/">
-                    <span className={styles.title}>登录</span>
-                  </Link>
-                </div>
-              </div>
-              <div className={styles.main}>
-                <Tabs>
-                  <TabPane tab="用户名登陆" key="1">
-                    <Form
-                      onSuccess={haneleSuccess}
-                      dataSet={nameLoginDS}
-                      labelLayout={'float' as LabelLayout}
-                    >
-                      <TextField labelWidth={4} name="userName" clearButton />
-                      <Password name="userPassword" />
-                      <div>
-                        <CheckBox label="自动登陆" name="frozen" ></CheckBox> <span className={styles.forgetPassword}>忘记密码</span>
-                        <Button color={'primary' as ButtonColor} type={'submit' as ButtonType}>登录</Button>
-                      </div>
-                    </Form>
-                  </TabPane>
-                  <TabPane tab="手机号码登录" key="2">
-                    <Form
-                      onSuccess={haneleSuccess}
-                      dataSet={captchaDS}
-                      className={styles.phoneForm}
-                      labelLayout={'float' as LabelLayout}
-                    >
-                      <TextField
-                        labelWidth={150}
-                        pattern="1[3-9]\d{9}"
-                        name="phoneNumber"
-                        clearButton
-                        addonBefore="+86"
-                        addonAfter="中国大陆"
-                      />
-                      <TextField
-                        name="phoneCaptcha"
-                        pattern="1[3-9]\d{9}"
-                        maxLength={4}
-                        addonAfter={captchaButton}
-                      />
-                      <div>
-                        
-                        <Button color={'primary' as ButtonColor} type={'submit' as ButtonType}>登录</Button>
-                      </div>
-                    </Form>
-                  </TabPane>
-                </Tabs>
-                <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
-                <AliPayIcon className={styles.icon} />
-                <Taobao className={styles.icon} />
-                <Wechat className={styles.icon} />
-                <span className={styles.register}>注册账户</span>
+    <div className={styles.container}>
+      <Row className={styles.row}>
+        <Col className={styles.description} xs={2} sm={4} md={6} lg={12} xl={12}>
+          <img className={styles.descriptionLog} alt="logo" src="/ChoerodonUI_logo.svg" />
+          <h2 className={styles.descriptionText}>
+            {intl.formatMessage({
+              id: 'pages.layouts.userLayout.title',
+              defaultMessage: 'Choerodon UI 用于开发和服务于企业级后台产品',
+            })}
+          </h2>
+          <img className={styles.descriptionImg} alt="description" src="/description.svg" />
+        </Col>
+        <Col className={styles.login} xs={2} sm={4} md={6} lg={12} xl={12}>
+          <div className={styles.lang}>{SelectLang && <SelectLang />}</div>
+          <div className={styles.content}>
+            <div className={styles.top}>
+              <div className={styles.header}>
+                <Link to="/">
+                  <span className={styles.title}>
+                    {intl.formatMessage({
+                      id: 'pages.login.submit',
+                      defaultMessage: '登录',
+                    })}
+                  </span>
+                </Link>
               </div>
             </div>
-            <Footer />
-          </Col>
-        </Row>
-      </div>
+            <div className={styles.main}>
+              <Tabs>
+                <TabPane
+                  tab={intl.formatMessage({
+                    id: 'pages.login.accountLogin.tab',
+                    defaultMessage: '账户密码登录',
+                  })}
+                  key="1"
+                >
+                  <Form
+                    onSuccess={haneleSuccess}
+                    dataSet={nameLoginDS}
+                    labelLayout={'float' as LabelLayout}
+                  >
+                    <TextField labelWidth={4} name="userName" clearButton />
+                    <Password name="userPassword" />
+                    <div>
+                      <CheckBox
+                        label={intl.formatMessage({
+                          id: 'pages.login.rememberMe',
+                          defaultMessage: '自动登录',
+                        })}
+                        name="frozen"
+                      />{' '}
+                      <span className={styles.forgetPassword}>
+                        {intl.formatMessage({
+                          id: 'pages.login.forgotPassword',
+                          defaultMessage: '忘记密码 ?',
+                        })}
+                      </span>
+                      <Button color={'primary' as ButtonColor} type={'submit' as ButtonType}>
+                        {intl.formatMessage({
+                          id: 'pages.login.submit',
+                          defaultMessage: '登录',
+                        })}
+                      </Button>
+                    </div>
+                  </Form>
+                </TabPane>
+                <TabPane
+                  tab={intl.formatMessage({
+                    id: 'pages.login.phoneLogin.tab',
+                    defaultMessage: '手机号登录',
+                  })}
+                  key="2"
+                >
+                  <Form
+                    onSuccess={haneleSuccess}
+                    dataSet={captchaDS}
+                    className={styles.phoneForm}
+                    labelLayout={'float' as LabelLayout}
+                  >
+                    <TextField
+                      labelWidth={150}
+                      pattern="1[3-9]\d{9}"
+                      name="phoneNumber"
+                      clearButton
+                      addonBefore="+86"
+                      addonAfter={intl.formatMessage({
+                        id: 'pages.login.phoneLogin.china',
+                        defaultMessage: '中国大陆',
+                      })}
+                    />
+                    <TextField
+                      name="phoneCaptcha"
+                      pattern="1[3-9]\d{9}"
+                      maxLength={4}
+                      addonAfter={captchaButton}
+                    />
+                    <div>
+                      <Button color={'primary' as ButtonColor} type={'submit' as ButtonType}>
+                        {intl.formatMessage({
+                          id: 'pages.login.submit',
+                          defaultMessage: '登录',
+                        })}
+                      </Button>
+                    </div>
+                  </Form>
+                </TabPane>
+              </Tabs>
+              <FormattedMessage
+                id="pages.login.loginWith"
+                defaultMessage={intl.formatMessage({
+                  id: 'pages.login.loginWith',
+                  defaultMessage: '其他登录方式 :',
+                })}
+              />
+              <AliPayIcon className={styles.icon} />
+              <Taobao className={styles.icon} />
+              <Wechat className={styles.icon} />
+              <span className={styles.register}>
+                {intl.formatMessage({
+                  id: 'pages.login.registerAccount',
+                  defaultMessage: '注册账户',
+                })}
+              </span>
+            </div>
+          </div>
+          <Footer />
+        </Col>
+      </Row>
+    </div>
   );
 };
 

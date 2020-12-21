@@ -4,17 +4,17 @@ const Settings: LayoutSettings & {
   pwa?: boolean;
   logo?: string;
 } = {
-  navTheme: 'light',
   // 拂晓蓝
   primaryColor: '#5365EA',
   layout: 'mix',
   contentWidth: 'Fluid',
+  headerTheme: 'light',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'C7n Pro',
+  title: '',
   pwa: false,
-  logo: 'https://choerodon.io/img/nav/choerodon_logo_fixed.svg',
+  logo: 'https://pic.downk.cc/item/5fe005a73ffa7d37b317b7fb.png',
   iconfontUrl: '',
 };
 

@@ -14,7 +14,7 @@ export default defineConfig({
     hmr: true,
   },
   layout: {
-    name: 'Ant Design Pro',
+    name: 'C7N Pro',
     locale: true,
     siderWidth: 208,
     ...defaultSettings,
@@ -46,7 +46,7 @@ export default defineConfig({
     basePath: '/',
   },
   exportStatic: {},
-  extraBabelPlugins:[
+  extraBabelPlugins: [
     //@ts-ignore
     ...uedConfig.generateC7nUiConfig(),
   ],

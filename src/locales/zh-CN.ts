@@ -1,3 +1,4 @@
+import proComponentsLocale from 'choerodon-ui/pro/lib/locale-context/zh_CN';
 import component from './zh-CN/component';
 import globalHeader from './zh-CN/globalHeader';
 import menu from './zh-CN/menu';
@@ -21,4 +22,5 @@ export default {
   ...settings,
   ...pwa,
   ...component,
+  proComponentsLocale,
 };

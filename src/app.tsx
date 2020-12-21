@@ -1,13 +1,15 @@
 import React from 'react';
 import { BasicLayoutProps, Settings as LayoutSettings, PageLoading } from '@ant-design/pro-layout';
-import { notification } from 'antd';
-import { history, RequestConfig } from 'umi';
+import { notification } from 'choerodon-ui';
+import { history, RequestConfig, getLocale, getIntl } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
+import Container from '@hzero-front-ui/cfg/lib/components/Container';
+import { Locale } from 'choerodon-ui/lib/locale-provider';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
-import Container from '@hzero-front-ui/cfg/lib/components/Container';
+import { ModalContainer, localeContext } from 'choerodon-ui/pro';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -110,9 +112,12 @@ const errorHandler = (error: ResponseError) => {
   throw error;
 };
 
-export function rootContainer(container:any) {
+export function rootContainer(container: any) {
+  const intl = getIntl(getLocale(), true);
+  localeContext.setLocale(intl.messages.proComponentsLocale as Locale);
   return (
     <Container defaultTheme="theme4">
+      <ModalContainer />
       {container}
     </Container>
   );
