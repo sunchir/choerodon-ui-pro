@@ -7,9 +7,9 @@ import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
 import Container from '@hzero-front-ui/cfg/lib/components/Container';
 import { Locale } from 'choerodon-ui/lib/locale-provider';
+import { ModalContainer, localeContext } from 'choerodon-ui/pro';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
-import { ModalContainer, localeContext } from 'choerodon-ui/pro';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -55,6 +55,8 @@ export const layout = ({
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
+    collapsedButtonRender: false,
+    collapsed: true,
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { currentUser } = initialState;

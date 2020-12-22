@@ -198,19 +198,21 @@ const Login: React.FC<{}> = () => {
                     <TextField labelWidth={4} name="userName" clearButton />
                     <Password name="userPassword" />
                     <div>
-                      <CheckBox
-                        label={intl.formatMessage({
-                          id: 'pages.login.rememberMe',
-                          defaultMessage: '自动登录',
-                        })}
-                        name="frozen"
-                      />{' '}
-                      <span className={styles.forgetPassword}>
-                        {intl.formatMessage({
-                          id: 'pages.login.forgotPassword',
-                          defaultMessage: '忘记密码 ?',
-                        })}
-                      </span>
+                      <div className={styles.loginAutoLogin}>
+                        <CheckBox
+                          label={intl.formatMessage({
+                            id: 'pages.login.rememberMe',
+                            defaultMessage: '自动登录',
+                          })}
+                          name="frozen"
+                        />{' '}
+                        <span className={styles.forgetPassword}>
+                          {intl.formatMessage({
+                            id: 'pages.login.forgotPassword',
+                            defaultMessage: '忘记密码 ?',
+                          })}
+                        </span>
+                      </div>
                       <Button color={'primary' as ButtonColor} type={'submit' as ButtonType}>
                         {intl.formatMessage({
                           id: 'pages.login.submit',
@@ -261,22 +263,24 @@ const Login: React.FC<{}> = () => {
                   </Form>
                 </TabPane>
               </Tabs>
-              <FormattedMessage
-                id="pages.login.loginWith"
-                defaultMessage={intl.formatMessage({
-                  id: 'pages.login.loginWith',
-                  defaultMessage: '其他登录方式 :',
-                })}
-              />
-              <AliPayIcon className={styles.icon} />
-              <Taobao className={styles.icon} />
-              <Wechat className={styles.icon} />
-              <span className={styles.register}>
-                {intl.formatMessage({
-                  id: 'pages.login.registerAccount',
-                  defaultMessage: '注册账户',
-                })}
-              </span>
+              <div className={styles.loginFooter}>
+                <FormattedMessage
+                  id="pages.login.loginWith"
+                  defaultMessage={intl.formatMessage({
+                    id: 'pages.login.loginWith',
+                    defaultMessage: '其他登录方式 :',
+                  })}
+                />
+                <AliPayIcon className={styles.icon} />
+                <Taobao className={styles.icon} />
+                <Wechat className={styles.icon} />
+                <span className={styles.register}>
+                  {intl.formatMessage({
+                    id: 'pages.login.registerAccount',
+                    defaultMessage: '注册账户',
+                  })}
+                </span>
+              </div>
             </div>
           </div>
           <Footer />
