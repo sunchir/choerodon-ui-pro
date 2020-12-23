@@ -30,4 +30,10 @@ export default {
   'pages.login.phoneCaptcha': 'Captcha',
   'pages.login.success': 'Login successful',
   'pages.login.fail': 'Login failed',
+  'pages.welcome.description':'Refined from the concept of lowCode, a component library serving front-end performance is welcome to try',
+  'pages.welcome.advanced': 'Table, Form and other heavy components, combined with umi performance tools + performance component library, the icing on the cake',
+  'pages.welcome.everyWhere': 'dataSet One set of configuration for multiple components',
+  'pages.welcome.localUrl': ' choerodon-ui website address',
+  'pages.admin.look':'This page can only be viewed with admin privileges',
+  'pages.admin.umi':'Umi ui is now released, welcome to use npm run ui to start the experience.',
 };

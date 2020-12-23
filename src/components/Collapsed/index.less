@@ -1,0 +1,36 @@
+.collapseContainer {
+    width: 100%;
+    text-align: right;
+    position: relative;
+    height: .42rem;
+}
+.shawdow {
+    position: absolute;
+    z-index: 1;
+    right: -18px;
+    height: 100px;
+    width: 16px;
+    overflow: hidden;
+    &:after {
+        background: white;
+        border-radius: 50%;
+        z-index: 1;
+        content: ' ';
+        width: 135px;
+        height: 50px;
+        display: block;
+        position: relative;
+    }
+}
+.icon {
+    color: white;
+    background: #5365EA;
+    border-radius: 50%;
+    position: absolute;
+    right: -22px;
+    z-index: 2;
+    top: 15px;
+}
+:global(.ant-tooltip-placement-right){
+    padding-left:0;
+}

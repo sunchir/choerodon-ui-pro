@@ -2,11 +2,12 @@ import React, { useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'choerodon-ui';
 import { Size } from 'choerodon-ui/lib/_util/enum';
-import { history, useModel } from 'umi';
+import { history, useModel, useIntl } from 'umi';
 import { outLogin } from '@/services/login';
 import { stringify } from 'querystring';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
+import {layout} from '@/app';
 
 export interface GlobalHeaderRightProps {
   menu?: boolean;
@@ -32,6 +33,7 @@ const loginOut = async () => {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
+  const intl = useIntl();
 
   const onMenuClick = useCallback(
     (event: {
@@ -78,20 +80,29 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       {menu && (
         <Menu.Item key="center">
           <UserOutlined />
-          个人中心
+          {intl.formatMessage({
+            id:"menu.account.center",
+            defaultMessage: '个人中心'
+          })}
         </Menu.Item>
       )}
       {menu && (
         <Menu.Item key="settings">
           <SettingOutlined />
-          个人设置
+          {intl.formatMessage({
+            id:"menu.account.settings",
+            defaultMessage: '个人设置'
+          })}
         </Menu.Item>
       )}
       {menu && <Menu.Divider />}
 
       <Menu.Item key="logout">
         <LogoutOutlined />
-        退出登录
+        {intl.formatMessage({
+            id:"menu.account.logout",
+            defaultMessage: '退出登录'
+          })}
       </Menu.Item>
     </Menu>
   );

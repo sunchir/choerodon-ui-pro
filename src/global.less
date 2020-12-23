@@ -48,6 +48,83 @@ ol {
   }
 }
 
+.ant-layout-sider.ant-pro-sider {
+  background:#0F1358;
+  .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+    background:#0F1358;
+  }
+
+
+  .ant-pro-menu-item span.anticon {
+    width: 26px;
+    height: 24px;
+    border-radius: 4px;
+    text-align: center;
+    vertical-align: 26px;
+    display: table-cell;
+    line-height: 26px;
+    background: rgba(255, 255, 255, 0.16);
+    margin-right: .2rem;
+    color: #fff;
+  }
+
+  .ant-menu-item span.anticon {
+    width: 26px;
+    height: 24px;
+    border-radius: 4px;
+    text-align: center;
+    vertical-align: 26px;
+    display: table-cell;
+    line-height: 26px;
+    background: rgba(255, 255, 255, 0.16);
+    margin-right: .2rem;
+    color: #fff;
+  }
+
+  .ant-pro-sider-menu span.ant-pro-menu-item-title {
+    margin-left: .2rem;
+    color: #fff;
+  }
+
+  .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background: rgba(255, 255, 255, 0.08);
+    span.anticon {
+      background: #5365EA;
+    }
+  }
+
+  .ant-menu-submenu-active {
+    span.anticon {
+      background: #5365EA;
+    }
+  }
+
+  &.ant-layout-sider {
+    overflow: visible !important;
+  }
+
+  &.ant-layout-sider-collapsed {
+    .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+      background: transparent;
+      span.anticon {
+        background: transparent;
+      }
+    }
+    .ant-menu-submenu-active {
+      span.anticon {
+        background: transparent;
+      }
+    }
+    .ant-menu-item span.anticon {
+      background: transparent;
+    }
+
+    .ant-pro-menu-item span.anticon {
+      background: transparent;
+    }
+  }
+}
+
 // 兼容IE11
 @media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
   body .ant-design-pro > .ant-layout {

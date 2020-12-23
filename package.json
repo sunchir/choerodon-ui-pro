@@ -55,9 +55,9 @@
   "dependencies": {
     "@ant-design/icons": "^4.0.0",
     "@ant-design/pro-layout": "^6.4.19",
-    "@hzero-front-ui/c7n-ui": "2.0.7-alpha-c7n.3",
-    "@hzero-front-ui/cfg": "2.0.7-alpha-c7n.3",
-    "@hzero-front-ui/hzero-ui": "2.0.7-alpha-c7n.3",
+    "@hzero-front-ui/c7n-ui": "2.0.7-alpha-c7n.4",
+    "@hzero-front-ui/cfg": "2.0.7-alpha-c7n.4",
+    "@hzero-front-ui/hzero-ui": "2.0.7-alpha-c7n.4",
     "@umijs/route-utils": "^1.0.33",
     "axios": "^0.21.0",
     "choerodon-ui": "^0.8.77",
@@ -73,7 +73,8 @@
     "react-helmet-async": "^1.0.4",
     "styled-components": "^5.2.1",
     "umi": "^3.2.14",
-    "umi-request": "^1.0.8"
+    "umi-request": "^1.0.8",
+    "use-merge-value": "^1.0.2"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^2.0.2",

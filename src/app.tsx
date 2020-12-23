@@ -10,6 +10,7 @@ import { Locale } from 'choerodon-ui/lib/locale-provider';
 import { ModalContainer, localeContext } from 'choerodon-ui/pro';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
+import  Collapse from '@/components/Collapsed';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -56,7 +57,6 @@ export const layout = ({
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     collapsedButtonRender: false,
-    collapsed: true,
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { currentUser } = initialState;
@@ -66,7 +66,7 @@ export const layout = ({
         history.push('/user/login');
       }
     },
-    menuHeaderRender: undefined,
+    menuHeaderRender: () => (<Collapse collapsed={!!initialState?.settings?.collapsed}/>),
     ...initialState?.settings,
   };
 };

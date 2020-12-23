@@ -1,8 +1,8 @@
 export default {
   'component.globalHeader.search': 'Search',
-  'component.globalHeader.search.example1': 'Search example 1',
-  'component.globalHeader.search.example2': 'Search example 2',
-  'component.globalHeader.search.example3': 'Search example 3',
+  'component.globalHeader.search.example1': 'umi related ecology',
+  'component.globalHeader.search.example2': 'Table example',
+  'component.globalHeader.search.example3': 'Layout of the document',
   'component.globalHeader.help': 'Help',
   'component.globalHeader.notification': 'Notification',
   'component.globalHeader.notification.empty': 'You have viewed all notifications.',

@@ -1,8 +1,8 @@
 export default {
   'component.globalHeader.search': '站内搜索',
-  'component.globalHeader.search.example1': '搜索提示一',
-  'component.globalHeader.search.example2': '搜索提示二',
-  'component.globalHeader.search.example3': '搜索提示三',
+  'component.globalHeader.search.example1': 'umi 相关生态',
+  'component.globalHeader.search.example2': '表格例子',
+  'component.globalHeader.search.example3': '布局文档',
   'component.globalHeader.help': '使用文档',
   'component.globalHeader.notification': '通知',
   'component.globalHeader.notification.empty': '你已查看所有通知',

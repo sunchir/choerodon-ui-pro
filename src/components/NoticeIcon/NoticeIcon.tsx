@@ -113,7 +113,7 @@ const NoticeIcon: React.FC<NoticeIconProps> & {
       visible={visible}
       onVisibleChange={(value) => {
         if(value !== undefined) {
-          setVisible(value)
+          setVisible(value);
         }
       }}
     >

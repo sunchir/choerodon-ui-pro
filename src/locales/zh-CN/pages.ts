@@ -28,4 +28,10 @@ export default {
   'pages.login.phoneCaptcha': '验证码',
   'pages.login.success': '登录成功',
   'pages.login.fail': '登录失败',
+  'pages.welcome.description':'提炼自lowCode理念，为前端效能服务的组件库欢迎尝试',
+  'pages.welcome.advanced': 'Table, Form 等重型组件应有尽有，结合umi效能工具 + 效能组件库 ，锦上添花',
+  'pages.welcome.everyWhere': 'dataSet 一套配置多组件适用',
+  'pages.welcome.localUrl': '猪齿鱼UI官网地址',
+  'pages.admin.look':'这个页面只有 admin 权限才能查看',
+  'pages.admin.umi':'umi ui 现已发布，欢迎使用 npm run ui 启动体验。',
 };

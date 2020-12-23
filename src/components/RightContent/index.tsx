@@ -1,7 +1,7 @@
 import { Tooltip, Tag, Row, Col } from 'choerodon-ui';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
-import { useModel, SelectLang } from 'umi';
+import { useModel, SelectLang, useIntl } from 'umi';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
@@ -16,6 +16,7 @@ const ENVTagColor = {
 
 const GlobalHeaderRight: React.FC<{}> = () => {
   const { initialState } = useModel('@@initialState');
+  const intl = useIntl();
 
   if (!initialState || !initialState.settings) {
     return null;
@@ -32,7 +33,7 @@ const GlobalHeaderRight: React.FC<{}> = () => {
       <Col span={6}>
         <HeaderSearch
           className={`${styles.action} ${styles.search}`}
-          placeholder="站内搜索"
+          placeholder={intl.formatMessage({id:'component.globalHeader.search',defaultMessage:'站内搜索'})}
           defaultValue="umi ui"
           options={[
             {
@@ -42,19 +43,19 @@ const GlobalHeaderRight: React.FC<{}> = () => {
               icon: 'extension',
             },
             {
-              meaning: 'umi生态相关插件',
+              meaning: intl.formatMessage({id:'component.globalHeader.search.example1',defaultMessage:'umi 相关生态'}),
               src: 'https://beta-pro.ant.design/blog/layout-new-style-cn',
               value: 'umi Plugins umi生态相关插件',
               icon: 'explore',
             },
             {
-              meaning: '表格例子',
+              meaning: intl.formatMessage({id:'component.globalHeader.search.example2',defaultMessage:'表格例子'}),
               value: 'Pro Table 表格例子',
               src: 'https://protable.ant.design/',
               icon: 'explicit',
             },
             {
-              meaning: '布局文档',
+              meaning: intl.formatMessage({id:'component.globalHeader.search.example3',defaultMessage:'布局文档'}),
               src: 'https://procomponents.ant.design/components/layout',
               value: 'Pro Layout 布局文档',
               icon: 'filter_hdr-o',
@@ -63,7 +64,7 @@ const GlobalHeaderRight: React.FC<{}> = () => {
         />
       </Col>
       <Col span={2}>
-        <Tooltip title="使用文档">
+        <Tooltip title={intl.formatMessage({id:'component.globalHeader.help',defaultMessage:'使用文档'})}>
           <span
             className={styles.action}
             onClick={() => {
