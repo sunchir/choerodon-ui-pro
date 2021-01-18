@@ -4,7 +4,7 @@
 
 快速搭建使用 Choerodon UI 脚手架
 
-[![Build With Umi](https://img.shields.io/badge/build%20with-umi-028fe4.svg?style=flat-square)](http://umijs.org/)![](https://badgen.net/badge/icon/Ant%20Design?icon=https://gw.alipayobjects.com/zos/antfincdn/Pp4WPgVDB3/KDpgvguMpGfqaHPjicRK.svg&label) ![Github Action](https://github.com/ant-design/ant-design-pro/workflows/Node%20CI/badge.svg) ![](https://user-images.githubusercontent.com/8186664/44953195-581e3d80-aec4-11e8-8dcb-54b9db38ec11.png)
+[![Build With Umi](https://img.shields.io/badge/build%20with-umi-028fe4.svg?style=flat-square)](http://umijs.org/) ![Github Action](https://github.com/ant-design/ant-design-pro/workflows/Node%20CI/badge.svg)[![Build With Choerodon-Ui](https://img.imgdb.cn/item/6004f7ba3ffa7d37b3ec9c3d.jpg)](https://open-hand.gitee.io/choerodon-ui) ![](https://img.imgdb.cn/item/6004e6b03ffa7d37b3e49c8a.jpg)
 
 </div>
 
