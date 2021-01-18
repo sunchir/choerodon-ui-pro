@@ -8,7 +8,7 @@
 
 </div>
 
-- 预览：http://preview.pro.ant.design
+- 预览：https://c7n-ui-pro.netlify.app/
 
 ## 特性
 
@@ -16,7 +16,7 @@
 - :scroll: **区块**: 通过区块模板快速构建页面
 - :gem: **优雅美观**：基于 Choerodon-ui 体系精心设计
 - :triangular_ruler: **常见设计模式**：提炼自中后台应用的典型页面和场景
-- :rocket: **最新技术栈**：使用 React/umi/dva/antd 等前端前沿技术开发
+- :rocket: **最新技术栈**：使用 React/umi/dva/choerodon-ui 等前端前沿技术开发
 - :iphone: **响应式**：针对不同屏幕大小设计
 - :art: **主题**：可配置的主题满足多样化的品牌诉求
 - :globe_with_meridians: **国际化**：内建业界通用的国际化方案
@@ -79,6 +79,6 @@ $ npm start         # visit http://localhost:8000
 
 我们非常欢迎你的贡献，你可以通过以下方式和我们一起共建 :smiley:：
 
-- 在你的公司或个人项目中使用 Ant Design Pro。
+- 在你的公司或个人项目中使用 Choerodon-ui Pro。
 - 通过 [Issue](https://github.com/sunchir/choerodon-ui-pro/issues) 报告 bug 或进行咨询。
 - 提交 [Pull Request](https://github.com/sunchir/choerodon-ui-pro/pulls) 改进 Pro 的代码。
