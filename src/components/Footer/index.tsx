@@ -1,6 +1,6 @@
 import React from 'react';
 import { GithubOutlined } from '@ant-design/icons';
-import { DefaultFooter } from '@ant-design/pro-layout';
+import { DefaultFooter } from '@choerodon-ui/pro-layout';
 
 export default () => (
   <DefaultFooter

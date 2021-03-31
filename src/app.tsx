@@ -1,16 +1,18 @@
 import React from 'react';
-import { BasicLayoutProps, Settings as LayoutSettings, PageLoading } from '@ant-design/pro-layout';
+import type { BasicLayoutProps, Settings as LayoutSettings } from '@choerodon-ui/pro-layout';
+import { PageLoading } from '@choerodon-ui/pro-layout';
 import { notification } from 'choerodon-ui';
-import { history, RequestConfig, getLocale, getIntl } from 'umi';
+import type { RequestConfig } from 'umi';
+import { history, getLocale, getIntl } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import { ResponseError } from 'umi-request';
+import type { ResponseError } from 'umi-request';
 import Container from '@hzero-front-ui/cfg/lib/components/Container';
-import { Locale } from 'choerodon-ui/lib/locale-provider';
+import type { Locale } from 'choerodon-ui/lib/locale-provider';
 import { ModalContainer, localeContext } from 'choerodon-ui/pro';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
-import  Collapse from '@/components/Collapsed';
+import Collapse from '@/components/Collapsed';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -66,7 +68,7 @@ export const layout = ({
         history.push('/user/login');
       }
     },
-    menuHeaderRender: () => (<Collapse collapsed={!!initialState?.settings?.collapsed}/>),
+    menuHeaderRender: () => <Collapse collapsed={!!initialState?.settings?.collapsed} />,
     ...initialState?.settings,
   };
 };
@@ -116,7 +118,7 @@ const errorHandler = (error: ResponseError) => {
 
 export function rootContainer(container: any) {
   const intl = getIntl(getLocale(), true);
-  localeContext.setLocale(intl.messages.proComponentsLocale as Locale);
+  localeContext.setLocale(intl?.messages?.proComponentsLocale as Locale);
   return (
     <Container defaultTheme="theme4">
       <ModalContainer />

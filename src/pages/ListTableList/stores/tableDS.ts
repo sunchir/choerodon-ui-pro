@@ -1,12 +1,11 @@
-import { DataSetProps } from 'choerodon-ui/pro/lib/data-set/DataSet';
-import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
-import Record from 'choerodon-ui/pro/lib/data-set/Record';
-import { useIntl } from 'umi';
+import type { DataSetProps } from 'choerodon-ui/pro/lib/data-set/DataSet';
+import type { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
+import type Record from 'choerodon-ui/pro/lib/data-set/Record';
 
 // 推荐导出一个函数用于生成ds
 // 这里传入了一个字段用来设置查询 以得到不用的数据 同时进行组件的复用
-const getTableDSProps = (serialType: string): DataSetProps => {
-  return ({
+const getTableDSProps = (): DataSetProps => {
+  return {
     autoQuery: true, // 在创建成功后进行查询
     fields: [
       {
@@ -64,10 +63,6 @@ const getTableDSProps = (serialType: string): DataSetProps => {
         label: '创建时间',
       },
     ],
-    // 查询字段 这里暂时没有实际用途 在实际开发中多为id或者type之类
-    queryParameter: {
-      serialType,
-    },
     queryFields: [
       {
         name: 'serialNumber',
@@ -79,7 +74,7 @@ const getTableDSProps = (serialType: string): DataSetProps => {
         label: '标题',
         type: 'string' as FieldType,
       },
-  
+
       {
         name: 'status',
         type: 'number' as FieldType,
@@ -133,7 +128,7 @@ const getTableDSProps = (serialType: string): DataSetProps => {
         method: 'post',
       },
     },
-  })
+  };
 };
 
 export default getTableDSProps;

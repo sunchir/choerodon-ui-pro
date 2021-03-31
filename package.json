@@ -40,6 +40,10 @@
     "test:component": "umi test ./src/components",
     "tsc": "tsc --noEmit"
   },
+  "gitHooks": {
+    "pre-commit": "pretty-quick --staged",
+    "commit-msg": "node scripts/verifyCommit.js"
+  },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
@@ -54,7 +58,7 @@
   ],
   "dependencies": {
     "@ant-design/icons": "^4.0.0",
-    "@ant-design/pro-layout": "^6.4.19",
+    "@choerodon-ui/pro-layout": "^0.0.0-beta.0",
     "@hzero-front-ui/c7n-ui": "2.0.7-alpha-c7n.7",
     "@hzero-front-ui/cfg": "2.0.7-alpha-c7n.7",
     "@hzero-front-ui/hzero-ui": "2.0.7-alpha-c7n.7",
@@ -78,8 +82,10 @@
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^2.0.2",
+    "@c7n-umi/plugin-layout": "^0.3.0",
+    "@c7n-umi/preset-react": "^0.1.0",
+    "babel-plugin-import": "^1.13.3",
     "@types/classnames": "^2.2.7",
-    "@types/styled-components": "^5.1.5",
     "@types/express": "^4.17.0",
     "@types/history": "^4.7.2",
     "@types/jest": "^26.0.0",
@@ -88,11 +94,11 @@
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-helmet": "^6.1.0",
+    "@types/styled-components": "^5.1.5",
     "@umijs/fabric": "^2.3.0",
     "@umijs/plugin-blocks": "^2.0.5",
     "@umijs/plugin-esbuild": "^1.0.0-beta.2",
     "@umijs/preset-ant-design-pro": "^1.2.0",
-    "@umijs/preset-react": "^1.4.8",
     "@umijs/yorkie": "^2.0.3",
     "carlo": "^0.9.46",
     "cross-env": "^7.0.0",

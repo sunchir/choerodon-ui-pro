@@ -13,6 +13,10 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
+  presets: [
+    require.resolve('@c7n-umi/preset-react'),
+    // 'hzero-cli-preset-ui',
+  ],
   layout: {
     name: 'C7N Pro',
     locale: true,
@@ -27,7 +31,7 @@ export default defineConfig({
     baseNavigator: true,
   },
   dynamicImport: {
-    loading: '@ant-design/pro-layout/es/PageLoading',
+    loading: '@choerodon-ui/pro-layout/es/PageLoading',
   },
   targets: {
     ie: 11,

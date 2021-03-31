@@ -1,24 +1,30 @@
-import React, { FC, useMemo } from 'react';
-import { Table, DataSet } from 'choerodon-ui/pro';
+import type { FC } from 'react';
+import { useEffect } from 'react';
+import React, { useContext } from 'react';
+import { Table } from 'choerodon-ui/pro';
 import { Tag } from 'choerodon-ui';
-import { TableButtonType } from 'choerodon-ui/pro/lib/table/enum';
-import { ButtonColor } from 'choerodon-ui/pro/lib/button/enum';
+import type { TableButtonType } from 'choerodon-ui/pro/lib/table/enum';
+import type { ButtonColor } from 'choerodon-ui/pro/lib/button/enum';
 import style from '../index.less';
-import getTableDSProps from '../stores/tableDS';
 import { handleDealWithRecord, operatorsRenderer } from '../utils/index';
+import Store from '../stores';
 
 const { Column } = Table;
 
-interface TablePageProps {
+type TablePageProps = {
   serialType: string;
-}
+};
 const TablePage: FC<TablePageProps> = ({ serialType }) => {
-  const tableDs = useMemo(() => new DataSet(getTableDSProps(serialType)), []);
-
+  const { tableDataSet, operationRecordDataSet } = useContext(Store);
+  useEffect(() => {
+    if (tableDataSet) {
+      tableDataSet.setQueryParameter('serialType', serialType);
+    }
+  }, [serialType, tableDataSet]);
   return (
     <div className={style['table-wrapper']}>
       <Table
-        dataSet={tableDs!}
+        dataSet={tableDataSet!}
         buttons={[
           [
             'delete' as TableButtonType,
@@ -30,7 +36,7 @@ const TablePage: FC<TablePageProps> = ({ serialType }) => {
             'add' as TableButtonType,
             {
               onClick: () => {
-                handleDealWithRecord(tableDs!);
+                handleDealWithRecord(tableDataSet!);
               },
             },
           ],
@@ -53,7 +59,13 @@ const TablePage: FC<TablePageProps> = ({ serialType }) => {
         <Column name="operator" />
         <Column name="remark" />
         <Column name="createTime" sortable />
-        <Column header="操作" renderer={operatorsRenderer} width={330} />
+        <Column
+          header="操作"
+          renderer={(props) => {
+            return operatorsRenderer(props, operationRecordDataSet);
+          }}
+          width={330}
+        />
       </Table>
     </div>
   );

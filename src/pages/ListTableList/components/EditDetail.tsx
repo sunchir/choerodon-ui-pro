@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import { Form, TextField, TextArea, Switch } from 'choerodon-ui/pro';
-
-import Record from 'choerodon-ui/pro/lib/data-set/Record';
+import type Record from 'choerodon-ui/pro/lib/data-set/Record';
 
 const EditDetail: FC<{
   record: Record;

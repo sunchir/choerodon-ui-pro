@@ -1,14 +1,14 @@
 import React from 'react';
 import { DataSet, Modal, message, Button } from 'choerodon-ui/pro';
-import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
-import Record from 'choerodon-ui/pro/lib/data-set/Record';
+import type { RenderProps } from 'choerodon-ui/pro/lib/field/FormField';
+import type Record from 'choerodon-ui/pro/lib/data-set/Record';
 import EditDetail from '../components/EditDetail';
 import OperationRecord from '../components/OperationRecord';
 import getTableDSProps from '../stores/tableDS';
-import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
+import type { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 
 const modalDs = new DataSet({
-  ...getTableDSProps(''),
+  ...getTableDSProps(),
   autoQuery: false,
   autoCreate: false,
 });
@@ -97,18 +97,23 @@ export const handleChangeStatus = async (record: Record, ds: DataSet) => {
  * 展示操作记录
  * @param record Record
  */
-export const handleShowOperationRecord = (record: Record) => {
+export const handleShowOperationRecord = (
+  record: Record,
+  operationRecordDataSet: DataSet | undefined,
+) => {
   if (!record) {
     message.error('新数据-无操作记录');
     return;
   }
   const serialNumber = record.get('serialNumber');
-
+  if (operationRecordDataSet) {
+    operationRecordDataSet.setQueryParameter('serialNumber', serialNumber);
+  }
   Modal.open({
     key: operationRecordModalKey,
     title: '操作记录',
     drawer: true,
-    children: <OperationRecord serialNumber={serialNumber} />,
+    children: <OperationRecord operationRecordDataSet={operationRecordDataSet} />,
     closable: true,
     footer: null,
   });
@@ -117,7 +122,10 @@ export const handleShowOperationRecord = (record: Record) => {
 /**
  * 操作列渲染器
  */
-export const operatorsRenderer: Renderer = ({ record, dataSet }) => {
+export const operatorsRenderer = (
+  { record, dataSet }: RenderProps,
+  operationRecordDataSet: DataSet | undefined,
+) => {
   const operators = [
     {
       key: 'edit',
@@ -190,7 +198,7 @@ export const operatorsRenderer: Renderer = ({ record, dataSet }) => {
           funcType={'flat' as FuncType}
           color={'green' as ButtonColor}
           onClick={() => {
-            handleShowOperationRecord(record!);
+            handleShowOperationRecord(record!, operationRecordDataSet);
           }}
         >
           操作记录

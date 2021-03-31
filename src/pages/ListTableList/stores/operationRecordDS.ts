@@ -1,9 +1,9 @@
-import { DataSetProps } from 'choerodon-ui/pro/lib/data-set/DataSet';
-import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
+import type { DataSetProps } from 'choerodon-ui/pro/lib/data-set/DataSet';
+import type { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
 
 // 推荐导出一个函数用于生成ds
 // 这里传入了一个字段用来设置查询 以得到不用的数据 同时进行组件的复用
-const getOperationRecordDSProps = (serialNumber: string): DataSetProps => ({
+const getOperationRecordDSProps = (): DataSetProps => ({
   autoQuery: true, // 在创建成功后进行查询
   fields: [
     {
@@ -33,10 +33,6 @@ const getOperationRecordDSProps = (serialNumber: string): DataSetProps => ({
       lookupUrl: '/_api/standard-table/code/operatorType',
     },
   ],
-  // 查询字段 这里暂时没有实际用途 在实际开发中多为id或者type之类
-  queryParameter: {
-    serialNumber,
-  },
   // 处理请求相关内容 此处用来做mock处理
   transport: {
     // 当使用ds.query()或者触发查询的时候可以调用的接口地址
