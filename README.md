@@ -30,14 +30,12 @@
 src
 ├── components
 └── pages
-    ├── Welcome        // 路由组件下不应该再包含其他路由组件，基于这个约定就能清楚的区分路由组件和非路由组件了
+    ├── ListTableList  // 路由组件下不应该再包含其他路由组件，基于这个约定就能清楚的区分路由组件和非路由组件了
     |   ├── components // 对于复杂的页面可以再自己做更深层次的组织，但建议不要超过三层
-    |   ├── Form.tsx
+    |   ├── stores     // 存储dataSet状态让便于统一管理和控制
+    |   |   |—— index  // 用于封装该页面需要使用的dataSet到context
     |   ├── index.tsx  // 页面组件的代码
     |   └── index.less // 页面样式
-    ├── Order          // 路由组件下不应该再包含其他路由组件，基于这个约定就能清楚的区分路由组件和非路由组件了
-    |   ├── index.tsx
-    |   └── index.less
     ├── user           // 一系列页面推荐通过小写的单一字母做 group 目录
     |   ├── Login      // group 下的页面 Login
     |   └── util.ts    // 这里可以有一些共用方法之类，不做推荐和约束，看业务场景自行做组织

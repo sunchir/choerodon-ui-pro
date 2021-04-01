@@ -15,6 +15,7 @@
     name: 'welcome',
     icon: 'smile',
     component: './Welcome',
+    group: '协作',
   },
   {
     path: '/admin',

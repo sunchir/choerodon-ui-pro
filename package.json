@@ -37,7 +37,8 @@
     "test": "umi test",
     "test:all": "node ./tests/run-tests.js",
     "test:component": "umi test ./src/components",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "createRelease": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "gitHooks": {
     "precommit": "lint-staged",
@@ -83,7 +84,6 @@
     "@ant-design/pro-cli": "^2.0.2",
     "@c7n-umi/plugin-layout": "^0.3.0",
     "@c7n-umi/preset-react": "^0.1.0",
-    "babel-plugin-import": "^1.13.3",
     "@types/classnames": "^2.2.7",
     "@types/express": "^4.17.0",
     "@types/history": "^4.7.2",
@@ -99,7 +99,9 @@
     "@umijs/plugin-esbuild": "^1.0.0-beta.2",
     "@umijs/preset-ant-design-pro": "^1.2.0",
     "@umijs/yorkie": "^2.0.3",
+    "babel-plugin-import": "^1.13.3",
     "carlo": "^0.9.46",
+    "conventional-changelog-cli": "^2.1.1",
     "cross-env": "^7.0.0",
     "cross-port-killer": "^1.1.1",
     "detect-installer": "^1.0.1",
