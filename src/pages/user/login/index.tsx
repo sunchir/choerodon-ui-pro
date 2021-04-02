@@ -14,6 +14,7 @@ import type { ThemeSchema } from '@hzero-front-ui/cfg/lib/utils';
 import AliPayIcon from '@/assets/login/Alipay';
 import Wechat from '@/assets/login/wechat';
 import Taobao from '@/assets/login/Taobao';
+import {ValueChangeAction } from 'choerodon-ui/pro/lib/text-field/enum'
 
 import styles from './index.less';
 
@@ -196,8 +197,8 @@ const Login: React.FC<{}> = () => {
                     dataSet={nameLoginDS}
                     labelLayout={'float' as LabelLayout}
                   >
-                    <TextField labelWidth={4} name="userName" clearButton />
-                    <Password name="userPassword" />
+                    <TextField valueChangeAction={ValueChangeAction.input} labelWidth={4} name="userName" clearButton />
+                    <Password valueChangeAction={ValueChangeAction.input} name="userPassword" />
                     <div>
                       <div className={styles.loginAutoLogin}>
                         <CheckBox
@@ -240,6 +241,7 @@ const Login: React.FC<{}> = () => {
                       labelWidth={150}
                       pattern="1[3-9]\d{9}"
                       name="phoneNumber"
+                      valueChangeAction={ValueChangeAction.input}
                       clearButton
                       addonBefore="+86"
                       addonAfter={intl.formatMessage({
@@ -250,6 +252,7 @@ const Login: React.FC<{}> = () => {
                     <TextField
                       name="phoneCaptcha"
                       pattern="1[3-9]\d{9}"
+                      valueChangeAction={ValueChangeAction.input}
                       maxLength={4}
                       addonAfter={captchaButton}
                     />
